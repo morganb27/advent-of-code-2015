@@ -11,12 +11,16 @@ console.log(data.length);
 
 function niceStringCounter(arr) {
     let count = 0;
+    let countNewRules = 0;
     for (let element of arr) {
         if (isNiceString(element)) {
             count++;
         }
+        if (isNiceStringNewRules(element)) {
+            countNewRules++;
+        }
     }
-    return count;
+    return [count, countNewRules];
 }
 
 function isNiceString(str) {
@@ -44,6 +48,27 @@ function isNiceString(str) {
         return true;
     }
     return false;
+}
+
+function isNiceStringNewRules(str) {
+    let myMap = new Map();
+    let pairs;
+    let isLetterRepeatedTwice = false;
+    let isPairRepeatedTwice = false;
+    for (let i = 0; i < str.length; i++) {
+        if (i < str.length - 1) {
+            pairs = str[i] + str[i+1];
+            if (!myMap.has(pairs)) {
+                myMap.set(pairs, i);
+            } else if (myMap.has(pairs) && i >= myMap.get(pairs) + 2){
+                isPairRepeatedTwice = true;
+            }
+        }
+        if (str[i] == str[i+2]) {
+            isLetterRepeatedTwice = true;
+        }
+    }
+    return isLetterRepeatedTwice && isPairRepeatedTwice;
 }
 
 console.log(niceStringCounter(data));
