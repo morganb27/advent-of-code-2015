@@ -7,6 +7,7 @@ ROUTES = [line.strip() for line in fileinput.input()]
 def shortest_distance(data):
     graph = defaultdict(dict)
     shortest = float('inf')
+    longest = float('-inf')
     for line in data:
         left, distance = line.split(' = ')
         origin, destination = left.split(' to ')
@@ -19,6 +20,8 @@ def shortest_distance(data):
             current_sum += int(graph[perm[i]][perm[i+1]])
         if current_sum < shortest:
             shortest = current_sum
-    return shortest
+        if current_sum > longest:
+            longest = current_sum
+    return shortest, longest
 
 print(shortest_distance(ROUTES))
